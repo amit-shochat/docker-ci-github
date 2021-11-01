@@ -32,10 +32,26 @@ jobs:
       run: |
         pip install -r ../requirements.txt ; pylint -E app.py
 
+  docker-build:
+    runs-on: ubuntu-latest
+    env: 
+        working-directory: ./app
+    steps:
+    - uses: actions/checkout@v2
+    - name: build
+      run: docker build -t python-flask-docker .  
+    - name: run
+      run: docker run --name my-container -d -p 8080:8080 python-flask-docker:1.0.0
+    - name: push
+      run:  culr localhost:8080
+
+
+
+
   docker:
     
     runs-on: ubuntu-latest
-    needs: test
+    needs: run
 
     steps:
       - name: Checkout
@@ -58,4 +74,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app:1.0.0
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-flask-docker:1.0.0
