@@ -46,7 +46,7 @@ jobs:
     - name: Test with unittest
       working-directory: ./app
       run: |
-        python -m unittest discover . "*_test.py"    
+        python3 -m unittest discover . "*_test.py"    
   
 
 
