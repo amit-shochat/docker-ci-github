@@ -17,7 +17,7 @@ jobs:
         flake8-flags: ''
         mypy-flags: ''
         fail-on-isort: false
-    - name: Test with pytest
-      run: |
-        conda install pytest
-        pytest
+#     - name: Test with pytest
+#       run: |
+#         conda install pytest
+#         pytest
