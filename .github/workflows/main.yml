@@ -24,8 +24,9 @@ jobs:
         python-version: 3.9
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip pytest
-        pip install -r requirements.txt
-    - name: Run tests with pytest
+        python -m pip install --upgrade pip
+        pip install pylint 
+    - name: Analysing the code with pylint
       working-directory: ${{env.working-directory}}
-      run: pytest app.py
+      run: |
+        pip install -r requirements.txt ; pylint -E app.py
