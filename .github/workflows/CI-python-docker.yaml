@@ -39,56 +39,42 @@ jobs:
       working-directory: ${{env.working-directory}}
       run: |
          pip install --ignore-installed flask ; python3 -m pytest 
-
-  check-quality:
-  
-    runs-on: ubuntu-latest
-    needs: build_test_app # dependent by step up 
-    
-    name: A job to check my code quality
-    steps:
-    - name: Check code meets quality standards
-      id: code-inspector
-      uses: codeinspectorio/github-action@master
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: <92b914c718978f808470285ce7692cac836d372fb7fe7f31215780f262bd31cb>
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        code_inspector_api_token: ${{ secrets.CODE_INSPECTOR_API_TOKEN }}
-        force_ref: 'none'
-        min_quality_grade: 'WARNING'
-        min_quality_score: '50'
-        max_defects_rate: '0.2'
-        max_complex_functions_rate: '0.0001'
-        max_long_functions_rate: '0.0001'
-        project_name: 'docker-ci-github'
-        max_timeout_sec: '600'
+        coverageCommand: npm run coverage
+        debug: true
+    
 
-  docker_build-push:
+#   docker_build-push:
 
-    runs-on: ubuntu-latest
-    needs: check-quality # dependent by step up 
+#     runs-on: ubuntu-latest
+#     needs: check-quality # dependent by step up 
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+#       - name: Set up QEMU
+#         uses: docker/setup-qemu-action@v1
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v1
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v1
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-flask-docker:1.0.0
+#       - name: Build and push
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-flask-docker:1.0.0
 
 
 
