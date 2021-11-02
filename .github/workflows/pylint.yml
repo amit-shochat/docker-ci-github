@@ -28,7 +28,8 @@ jobs:
         python-root: '.'
         flake8-flags: '--count --select=E9,F63,F7,F82 --exit-zero --max-complexity=10 --max-line-length=127 --show-source --statistics'
         mypy-flags: '--ignore-missing-imports'
-        fail-on-isort: true
+        skip-isort: true
+#        fail-on-isort: true
     
     - name: Analysing the code with pylint
       working-directory: ${{env.working-directory}}
