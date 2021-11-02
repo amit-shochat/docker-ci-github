@@ -21,7 +21,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint flask pytest mypy
-         pip install -r ../requirements.txt
     
     - name: linting
       uses: alexanderdamiani/pylinter@v1.2.0
@@ -34,4 +33,4 @@ jobs:
     - name: Analysing the code with pylint
       working-directory: ${{env.working-directory}}
       run: |
-        python3 -m pytest ; pip install -r ../requirements.txt ; pylint -E
+        python3 -m pytest ; pylint -E
