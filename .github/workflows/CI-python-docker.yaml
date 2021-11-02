@@ -18,13 +18,9 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10"] # test app on deffrent ver 
-        
     steps:
-    — name: Checkout
-      uses: actions/checkout@v2
-      
+    - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      run: echo The username is ${{ inputs.username } # echo the github user 
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
@@ -51,11 +47,11 @@ jobs:
       working-directory: ${{env.working-directory}}
       run: |
          pip install --ignore-installed flask ; python3 -m pytest # install last flask ver to ignore erro 
+         
   check-quality: # CODE quality https://frontend.code-inspector.com
-
     runs-on: ubuntu-latest
     needs: build_test_app # dependent by step up
-
+    
     name: A job to check my code quality
     steps:
     - name: Check code meets quality standards
@@ -73,12 +69,10 @@ jobs:
         project_name: 'docker-ci-github'
         max_timeout_sec: '600'
 
-
   docker_build-push:
-
     runs-on: ubuntu-latest
     needs: check-quality # dependent by step up
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
