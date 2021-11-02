@@ -28,10 +28,13 @@ jobs:
         python-root: '.'
         flake8-flags: '--count --select=E9,F63,F7,F82 --exit-zero --max-complexity=10 --max-line-length=127 --show-source --statistics'
         mypy-flags: '--ignore-missing-imports'
-        skip-isort: true
-#        fail-on-isort: true
     
     - name: Analysing the code with pylint
       working-directory: ${{env.working-directory}}
       run: |
-        python3 -m pytest ; pylint -E
+         pylint -E app.py
+ 
+    - name: Testing the code with pytest
+      working-directory: ${{env.working-directory}}
+      run: |
+         python3 -m pytest ;
