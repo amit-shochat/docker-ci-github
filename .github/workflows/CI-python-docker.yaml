@@ -39,14 +39,26 @@ jobs:
       working-directory: ${{env.working-directory}}
       run: |
          pip install --ignore-installed flask ; python3 -m pytest 
-    - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v3.0.0
-      env:
-        CC_TEST_REPORTER_ID: <92b914c718978f808470285ce7692cac836d372fb7fe7f31215780f262bd31cb>
+
+        
+  coverage:
+    needs: build_test_app
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
       with:
-        coverageCommand: npm run coverage
+        node-version: '12'
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: 92b914c718978f808470285ce7692cac836d372fb7fe7f31215780f262bd31cb
+      with:
+        coverageCommand: yarn run coverage
         debug: true
-    
 
 #   docker_build-push:
 
