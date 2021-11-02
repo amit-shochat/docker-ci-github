@@ -21,11 +21,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint flask pytest mypy
-    - name: Analysing the code with pylint
-      working-directory: ${{env.working-directory}}
-      run: |
-        python3 -m pytest
-
+    
     - name: linting
       uses: alexanderdamiani/pylinter@v1.2.0
       with:
@@ -33,3 +29,8 @@ jobs:
         flake8-flags: '--count --show-source --statistics'
         mypy-flags: '--ignore-missing-imports'
         fail-on-isort: true
+    
+    - name: Analysing the code with pylint
+      working-directory: ${{env.working-directory}}
+      run: |
+        python3 -m pytest ; pip install -r requirements.txt ; pylint -E
