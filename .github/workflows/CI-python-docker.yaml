@@ -38,7 +38,7 @@ jobs:
     - name: Testing whit Pytest
       working-directory: ${{env.working-directory}}
       run: |
-         python3 -m pytest ;
+         pip install flask ; python3 -m pytest 
 
   docker_build-push:
 
