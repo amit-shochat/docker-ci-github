@@ -52,6 +52,7 @@ jobs:
       id: code-inspector
       uses: codeinspectorio/github-action@master
       with:
+        working-directory: ${{env.working-directory}}
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         code_inspector_api_token: ${{ secrets.CODE_INSPECTOR_API_TOKEN }}
         force_ref: 'none'
