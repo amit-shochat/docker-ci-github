@@ -24,4 +24,4 @@ jobs:
     - name: Analysing the code with pylint
       working-directory: ${{env.working-directory}}
       run: |
-        pylint `ls -R|grep .py$|xargs`
+        python3 -m pytest
